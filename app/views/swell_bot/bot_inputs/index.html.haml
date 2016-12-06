@@ -1,0 +1,21 @@
+.container
+	.row
+		.col-xs-12
+			= form_tag bot_inputs_path(), remote: true do |f|
+				= hidden_field_tag :scope, '', id: 'bot_scope', placeholder: 'scope'
+				#bot_params
+					- if @response.present?
+						- (@response.params || []).each do |key, val|
+							= hidden_field_tag key, val
+				.form-group
+					.input-group
+						= text_field_tag :input, '', id: 'bot_input', placeholder: 'Type a message...', class: 'form-control', autocomplete: :off
+						.input-group-btn
+							= submit_tag :Send, class: 'btn btn-primary'
+	.row
+		.col-xs-12#bot_history
+			- @history.each do |message|
+				= render 'bot_message', message: message, args: {}
+
+:javascript
+	setInterval(function(){ $.getScript( "#{j bot_inputs_path( unread: 1 )}" ) }, 20000)

@@ -1,0 +1,14 @@
+%div{ style: 'margin-bottom: 10px;' }This is what I can do.
+%div{ style: 'margin-bottom: 10px;' }
+	- if @bot_help.present?
+		.row.text-left
+			.col-xs-12.col-sm-4
+				%b Syntax
+			.col-xs-12.col-sm-8
+				%b Description
+		- @bot_help.each do |help|
+			.row.text-left
+				.col-xs-12.col-sm-4
+					= raw help[:syntax]
+				.col-xs-12.col-sm-8
+					= raw help[:description]

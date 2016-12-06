@@ -1,0 +1,15 @@
+$('#bot_history').prepend("#{j render 'bot_message', message: @request, args: {}}")
+$($('#bot_history').children().first()).trigger('swellbot.message.create')
+- @responses.each_with_index do |response, i|
+	- if response.published?
+		setTimeout(function(){
+		$('#bot_history').prepend("#{j render 'bot_message', message: response, args: {}}")
+		$($('#bot_history').children().first()).trigger('swellbot.message.create')
+		$('#bot_scope').val("#{j response.scope}")
+		$('#bot_params').html('')
+		- (response.params || []).each do |key, val|
+			$('#bot_params').append("<input type='hidden' name='#{j key}' value='#{j val}' />")
+
+		= raw response.options['onRead'] if response.options['onRead'].present?
+		},  500 + 500 * #{i} )
+$('#bot_input').val('')

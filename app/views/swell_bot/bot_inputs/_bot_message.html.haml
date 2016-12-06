@@ -1,0 +1,19 @@
+.well
+	- if message.is_a? SwellBot::BotResponse
+		.pull-right{ style: 'margin: 0 0 0 0.3em;' }
+			%b <
+			%span.brand-color-blue Swell Bot
+		.text-right
+			=raw message.to_s
+	- elsif message.user == current_user
+		.pull-left{ style: 'margin: 0 0.3em 0 0;' }
+			%a{ href: message.user.url }=message.user
+			%b >
+		.text-left
+			=raw message.to_s
+	- else
+		.pull-right{ style: 'margin: 0 0 0 0.3em;' }
+			%b <
+			%a{ href: message.user.url }=message.user
+		.text-right
+			=raw message.to_s

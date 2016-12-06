@@ -1,0 +1,9 @@
+- @history.reverse.each do |message|
+	$('#bot_history').prepend("#{j render 'bot_message', message: message, args: {}}")
+	$($('#bot_history').children().first()).trigger('swellbot.message.create')
+	$('#bot_scope').val("#{j message.scope}")
+	$('#bot_params').html('')
+	- (message.params || []).each do |key, val|
+		$('#bot_params').append("<input type='hidden' name='#{j key}' value='#{j val}' />")
+
+	= raw message.options['onRead'] if message.options['onRead'].present? && not( message.read? )
